@@ -1,24 +1,62 @@
 import Lecture1_adt.*; // Import all classes from Lecture1_adt package to be used in this client code
+import Lecture4_interfaces_abstract_classes.BankAccount;
+import Lecture4_interfaces_abstract_classes.DepositTrasaction;
+import Lecture4_interfaces_abstract_classes.WithdrawalTransaction;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 /*
-* Client Code for accessing the Lecture1_adt.TransactionInterface.java module
+ * Client Code for accessing the Lecture1_adt.TransactionInterface.java module
  */
 public class Main {
 
+    public static void Deposit(){
+        BankAccount account = new BankAccount(5000);
+
+        Calendar date = Calendar.getInstance();
+        DepositTrasaction deposit = new DepositTrasaction(2000, date);
+
+        deposit.apply(account);
+
+        deposit.printTransactionDetails();
+
+    }
+
+    public static void withdraw(){
+        BankAccount account = new BankAccount(5000);
+
+        Calendar date = Calendar.getInstance();
+        WithdrawalTransaction withdrawTransaction = new WithdrawalTransaction(date, 2000);
+
+        withdrawTransaction.apply(account);
+
+
+    }
+
+    public static void reverse() {
+        BankAccount account = new BankAccount(5000);
+
+        Calendar date = Calendar.getInstance();
+        WithdrawalTransaction withdrawTransaction = new WithdrawalTransaction(date, 2000);
+
+        withdrawTransaction.apply(account);
+
+        withdrawTransaction.reverse();
+
+        withdrawTransaction.apply(account);
+    }
+
+
     public static void testTransaction1() {
         Calendar d1 = new GregorianCalendar(); // d1 is an Object [Objects are Reference types]
-        Lecture1_adt.Transaction1 t1 = new Lecture1_adt.Transaction1(1000, d1); // amount and d1 are arguments
+        Transaction1 t1 = new Transaction1(1000, d1); // amount and d1 are arguments
 
         System.out.println(t1.toString());
         System.out.println("Lecture1_adt.TransactionInterface Amount: \t " + t1.amount);
         System.out.println("Lecture1_adt.TransactionInterface Date: \t " + t1.date);
+
 
         // Please note that the Client Codes can access the data in the class directly through the dot operator
         // This kind of exposure is a threat to both the Representation Independence and Preservation of Invariants
@@ -43,9 +81,9 @@ public class Main {
 
         Calendar d1 = new GregorianCalendar();
 
-        Lecture1_adt.Transaction2 t = new Lecture1_adt.Transaction2(1000, d1);
+        Transaction2 t = new Transaction2(1000, d1);
 
-        Lecture1_adt.Transaction2 modified_t = makeNextPayment(t);
+        Transaction2 modified_t = makeNextPayment(t);
 
         System.out.println("\n\nState of the Object T1 After Client Code Tried to Change the Amount");
         System.out.println("Lecture1_adt.TransactionInterface Amount: \t "+modified_t.getAmount());
@@ -56,8 +94,8 @@ public class Main {
         System.out.println("Lecture1_adt.TransactionInterface Date: \t "+modified_t.getDate().getTime());
 
         /* Please note that Although we have solved the problem of Transaction1
-        * And client code can no longer use the dot (.) operator to directly access the data
-        * There is still some exposure especially if we pass an object of a previous Transaction2 to create a new Transaction2 object
+         * And client code can no longer use the dot (.) operator to directly access the data
+         * There is still some exposure especially if we pass an object of a previous Transaction2 to create a new Transaction2 object
          */
 
     }
@@ -151,6 +189,7 @@ public class Main {
         // testTransaction1()
         // testTransaction2()
         // testTransaction3()
-        // testTransaction4()
+        // testTransaction4();
+        Deposit();
     }
 }
